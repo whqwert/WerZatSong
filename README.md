@@ -24,7 +24,7 @@ Before installing WerZatSong, make sure you meet the following requirements:
 3. Open a terminal and navigate to the extracted folder:
 
 ```bash
-cd werzatsong
+cd WerZatSong-main
 ```
 
 4. Install Node.js dependencies:
@@ -84,7 +84,9 @@ On the **first run**, this will:
 - Prompt you to **enter your Discord Webhook URL**
 - Prompt you to **enter your Audiotag API key**
 - Prompt you to **enter your AcoustID API key**
-- Exit automatically after setup is complete
+- Exit automatically with an error message after setup is complete
+
+  ![Setup](images/setup.png)
 
 ## How to Use WerZatSong
 
@@ -97,6 +99,10 @@ node werzatsong.js --audfprint --audiotag --musicbrainz --shazam
 
 ### General Options
 
+- **`--audfprint`** → Enable Audfprint search mode
+- **`--audiotag`** → Enable Audiotag search mode
+- **`--musicbrainz`** → Enable MusicBrainz (AcoustID) search mode
+- **`--shazam`** → Enable Shazam search mode
 - **`--trim <seconds>`** → Shortens `input` MP3 files to the specified length before processing (recommended for speed improvement if you input long duration files)
 
 ## Execution Modes
