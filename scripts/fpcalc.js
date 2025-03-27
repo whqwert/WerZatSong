@@ -12,6 +12,7 @@ const { trimExtension } = require('../utils/helpers')
 
 dotenv.config()
 
+const MAX_CORES_ALLOWED = 8 // avoid out of memory error
 const MUSICBRAINZ_LIMIT = 110 // seconds
 
 const execPromise = promisify(exec)
@@ -35,7 +36,7 @@ async function calculateFingerprint(file, offset){
 }
 
 if(cluster.isPrimary){
-    const cpuCores = Math.min(consts.MAX_CORES_ALLOWED, availableParallelism())
+    const cpuCores = Math.min(MAX_CORES_ALLOWED, availableParallelism())
     const { extension, file } = argv
     const fingerprints = {}
     const offsets = Array.from({ length: parseInt(extension) + 1 }, (_, i) => i)

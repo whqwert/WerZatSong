@@ -4,7 +4,7 @@ const ROOT_PATH = join(__dirname, '..')
 
 const consts = {
     // Limits
-    MAX_CORES_ALLOWED: 8, // avoid out of memory error
+    MAX_CORES_ALLOWED: 16, // avoid out of memory error
     // Endpoints
     ACOUSTID_LOOKUP_ENDPOINT: 'https://api.acoustid.org/v2/lookup',
     ACOUSTID_TRACK_ENDPOINT: 'https://acoustid.org/track',
