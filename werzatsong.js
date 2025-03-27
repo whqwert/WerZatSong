@@ -1,6 +1,6 @@
 const dotenv = require('dotenv')
 const { exec, spawn } = require('node:child_process')
-const { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, unlinkSync, writeFileSync, readFileSync } = require('node:fs')
+const { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, unlinkSync, writeFileSync } = require('node:fs')
 const { availableParallelism } = require('node:os')
 const { basename, join } = require('node:path')
 const { promisify } = require('node:util')
