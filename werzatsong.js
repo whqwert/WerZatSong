@@ -20,6 +20,7 @@ const AUDFPRINT_HIGHEST_SCORE = 2 // percentage
 const AUDFPRINT_EXTREME_HASHES = 70 // amount
 const MAX_FILES_PER_SEARCH = 30 // amount
 const MUSICBRAINZ_MIN_SCORE = 60 // percentage
+const PROGRAM_VERSION = 'v1.0.0'
 const RESULTS_FOLDER = join(consts.LOGS_FOLDER, generateUnique())
 const SHAZAM_SLEEP = 1.5 // seconds
 const WEBHOOK_SLEEP = 2 // seconds
@@ -34,7 +35,7 @@ const Mode = {
 const execPromise = promisify(exec)
 const { argv } = yargs(hideBin(process.argv))
 // Program version
-.version('v1.0.0')
+.version(PROGRAM_VERSION)
 // Search modes
 .option(Mode.AUDFPRINT, { type: 'boolean', description: 'Enable Audfprint-based matching' })
 .option(Mode.AUDIOTAG, { type: 'boolean', description: 'Enable search using the Audiotag API' })
@@ -253,7 +254,7 @@ async function createAudfprintLogs(env){
             const tempFile = join(consts.TEMP_FOLDER, `${inputBasename}.webhook.txt`)
             let webhookContent = ''
             for(const match of possibleMatches)
-                webhookContent += `[${match.common_hashes}/${match.total_hashes} | ${match.match_score}% | x${match.counter} | ${match.rank_position} | ${match.match_time}]: ${match.matched_file_basename}\n`
+                webhookContent += `[${match.common_hashes}/${match.total_hashes} | ${match.match_score}% | x${match.counter} | ${match.rank_position} | ${match.match_time}]: ${match.matched_file_basename}\n\n`
             writeFileSync(tempFile, webhookContent, 'utf-8')
             const basenameWithFormat = `${inputBasename}.mp3`
             await sleep(WEBHOOK_SLEEP)
@@ -326,6 +327,7 @@ async function shazam(env, file){
 
 async function init(){
     let { duration, extension, folder, threads, trim } = argv
+    info(`Welcome to WerZatSong ${PROGRAM_VERSION} - Developed by Nel with contributions from Numerophobe, AzureBlast and Mystic65`)
     setupFolders()
     const env = fetchEnvironment()
     const validatedWebhook = await validateWebhook(env.WEBHOOK_URL)
