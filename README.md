@@ -36,16 +36,16 @@ Before you start, make sure these programs are installed on your computer:
 
 3. **Run this command to install Node.js dependencies**:
 
-```bash
-npm install
-```
+    ```bash
+    npm install
+    ```
 
 4. **Run these commands one by one to install Python dependencies**:
 
-```bash
-pip install -r requirements.txt
-pip install audioop-lts
-```
+    ```bash
+    pip install -r requirements.txt
+    pip install audioop-lts
+    ```
 
 Done! Now you're ready to set up WerZatSong.
 
@@ -173,7 +173,7 @@ These options help MusicBrainz find matches by tweaking how it searches your MP3
 
 - **`--duration <min:max>`**
 
-  - **What it does**: Sets a song duration range (in seconds) for MusicBrainz to look for matches, like `"140:360"` (default: 2.5 to 6 minutes)
+  - **What it does**: Sets a song duration range (in seconds) for MusicBrainz to look for matches, like `"140:360"` [**default**: `--duration "140:360"`]
 
   - **Why use it**: If your song is much shorter or longer, adjust this so it fits. For example, `--duration "30:200"` for short songs or `--duration "300:600"` for longer ones
 
@@ -181,7 +181,7 @@ These options help MusicBrainz find matches by tweaking how it searches your MP3
 
 - **`--extension <seconds>`**
 
-  - **What it does**: Helps MusicBrainz find matches when the start of your MP3 needs to line up better (default: 10 seconds)
+  - **What it does**: Helps MusicBrainz find matches when the start of your MP3 file needs to line up better [**default**: `--extension 10`]
 
   - **Why use it**: If your song is missing the beginning, like if it starts late. Try  for example `--extension 15` if you think the beginning it's off by about 15 seconds
 
