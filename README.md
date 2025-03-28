@@ -144,7 +144,7 @@ On the **first run**, this will:
 #### Additional Audfprint Options
 
 - **`--folder <subfolder>`** → Selects a specific subfolder inside the `database` folder. This is useful if you want to search only fingerprints within a certain genre or source instead of processing all fingerprints from all folders at once, which takes longer (e.g., `--folder "indie-rock"`)
-- **`--threads <number>`** → Sets the number of processing threads (e.g., `--threads 4`) [**max**: 8] [**default**: max threads available]
+- **`--threads <number>`** → Sets the number of processing threads (e.g., `--threads 4`) [**max**: 16] [**default**: max threads available]
 - Usage example with some options:
 
     ```bash
