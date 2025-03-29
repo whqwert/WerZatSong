@@ -13,6 +13,8 @@ const { empty, exit, info, success, warning } = require('./utils/messages')
 const { validateAudiotag, validateDuration, validateExtension, validateMusicbrainz, validateWebhook } = require('./utils/validators')
 const postWebhook = require('./utils/webhook')
 
+require('node:events').setMaxListeners(100) // increase listeners limit
+
 const AUDFPRINT_LOWEST_HASHES = 25 // amount
 const AUDFPRINT_LOWEST_SCORE = 7 // percentage
 const AUDFPRINT_HIGHEST_HASHES = 40 // amount
@@ -20,7 +22,6 @@ const AUDFPRINT_HIGHEST_SCORE = 2 // percentage
 const AUDFPRINT_EXTREME_HASHES = 70 // amount
 const MAX_FILES_PER_SEARCH = 30 // amount
 const MUSICBRAINZ_MIN_SCORE = 60 // percentage
-const PROGRAM_VERSION = 'v1.0.0'
 const RESULTS_FOLDER = join(consts.LOGS_FOLDER, generateUnique())
 const SHAZAM_SLEEP = 1.5 // seconds
 const WEBHOOK_SLEEP = 2 // seconds
@@ -35,7 +36,7 @@ const Mode = {
 const execPromise = promisify(exec)
 const { argv } = yargs(hideBin(process.argv))
 // Program version
-.version(PROGRAM_VERSION)
+.version('v1.0.0')
 // Search modes
 .option(Mode.AUDFPRINT, { type: 'boolean', description: 'Enable Audfprint-based matching' })
 .option(Mode.AUDIOTAG, { type: 'boolean', description: 'Enable search using the Audiotag API' })
@@ -247,7 +248,7 @@ async function createAudfprintLogs(env){
         matches.sort((a, b) => b.common_hashes - a.common_hashes)
         let logContent = ''
         for(const match of matches)
-            logContent += `[${match.common_hashes}/${match.total_hashes} | ${match.match_score}% | x${match.counter} | ${match.rank_position} | ${match.match_time}]: ${match.matched_file_basename} (${match.matched_file})\n`
+            logContent += `[${match.common_hashes}/${match.total_hashes} | ${match.match_score}% | x${match.counter} | ${match.rank_position} | ${match.match_time}]: ${match.matched_file_basename} (${match.matched_file})\n\n`
         createResultsLog(inputBasename, Mode.AUDFPRINT, logContent)
         const possibleMatches = matches.filter(match => (match.match_score >= AUDFPRINT_LOWEST_SCORE && match.common_hashes >= AUDFPRINT_LOWEST_HASHES) || (match.match_score >= AUDFPRINT_HIGHEST_SCORE && match.common_hashes >= AUDFPRINT_HIGHEST_HASHES) || (match.common_hashes >= AUDFPRINT_EXTREME_HASHES))
         if(possibleMatches.length > 0){
@@ -327,7 +328,7 @@ async function shazam(env, file){
 
 async function init(){
     let { duration, extension, folder, threads, trim } = argv
-    info(`Welcome to WerZatSong ${PROGRAM_VERSION} - Developed by Nel with contributions from Numerophobe, AzureBlast and Mystic65`)
+    info('Welcome to WerZatSong! - Developed by Nel with contributions from Numerophobe, AzureBlast and Mystic65')
     setupFolders()
     const env = fetchEnvironment()
     const validatedWebhook = await validateWebhook(env.WEBHOOK_URL)

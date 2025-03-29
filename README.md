@@ -134,7 +134,7 @@ On the **first run**, this will:
 
 #### Set Up the Audfprint Database
 
-- Download the **database folders** that contain the **PKLZ files** from the [**Google Drive Repository**](https://drive.google.com)
+- Download the **database folders** that contain the **PKLZ files** from the [**Google Drive Repository**](https://drive.google.com/drive/u/1/folders/1O6Xv3BhQhvNdqkZLcVvtmh9VD7HTV57f)
 - Place the downloaded folders inside the `database` folder (created automatically after setup)
 - The folders are organized by **genres** or **sources** (e.g., `"indie-rock"`, `"watzatsong"`)
 - Once finished, your `database` folder should look like this:
@@ -144,7 +144,7 @@ On the **first run**, this will:
 #### Additional Audfprint Options
 
 - **`--folder <subfolder>`** → Selects a specific subfolder inside the `database` folder. This is useful if you want to search only fingerprints within a certain genre or source instead of processing all fingerprints from all folders at once, which takes longer (e.g., `--folder "indie-rock"`)
-- **`--threads <number>`** → Sets the number of processing threads (e.g., `--threads 4`) [**max**: 16] [**default**: max threads available]
+- **`--threads <number>`** → Sets the number of processing threads (e.g., `--threads 4`) [**max**: 16] [**default**: max threads available in your machine]
 - Usage example with some options:
 
     ```bash
