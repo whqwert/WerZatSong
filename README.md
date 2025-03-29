@@ -16,7 +16,7 @@ Before you start, make sure these programs are installed on your computer:
 ### System Requirements
 
 - [**Node.js**](https://nodejs.org) (v20.0 or higher) → Check in your terminal with `node -v` and `npm -v`
-- [**Python**](https://www.python.org/downloads) (v3.10 or higher) → Check in your terminal with `python --version` and `pip --version`
+- [**Python**](https://www.python.org/downloads) (v3.13 or higher) → Check in your terminal with `python --version` and `pip --version`
 - [**FFmpeg**](https://www.ffmpeg.org/download.html) → Check in your terminal with `ffmpeg -version`
 
   ![Programs](images/programs.png)
