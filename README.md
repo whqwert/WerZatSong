@@ -56,16 +56,8 @@ To use WerZatSong effectively, you'll also need the following:
 
 #### Download the Audfprint Database
 
-- Download the **database folders** that contain the **PKLZ files** from either [**Google Drive**](https://drive.google.com/drive/u/1/folders/1O6Xv3BhQhvNdqkZLcVvtmh9VD7HTV57f) or from this [**Alternative Link**](https://pastebin.com/ATyv1LFP)
+- Download the **database folders** that contain the **PKLZ files** from either [**Google Drive**](https://drive.google.com/drive/u/1/folders/1O6Xv3BhQhvNdqkZLcVvtmh9VD7HTV57f) or from this [**Mirror**](https://pastebin.com/ATyv1LFP)
 - The folders are organized by **genres** or **sources** (e.g., `"indie-rock"`, `"watzatsong"`)
-- As of **March 30, 2025**, ensure you've downloaded all **1,238** PKLZ files from these **6 folders**:
-
-    - `dark-experimental` → **103** files
-    - `indie-rock` → **86** files
-    - `lyon-funk` → **594** files
-    - `musify` → **65** files
-    - `random-variety` → **355** files
-    - `watzatsong` → **35** files
 
 ### Program Installation
 
