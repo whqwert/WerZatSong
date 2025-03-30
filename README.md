@@ -95,7 +95,7 @@ To use WerZatSong effectively, you'll also need the following:
             ![Rust Error](images/rust-error.png)
         - **C++ Build Tools Error** (see screenshot below):
             - Install Build Tools for Visual Studio 2017 or later from [the official website](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=16)
-            - During installation, select the *"Desktop development with C++ workload"* (also referred to as C++ tools)
+            - During installation, select the *"Desktop development with C++ workload"* (C++ tools)
             - After installation, restart your machine
             - Retry the `pip install` commands above
             ![Shazam Error](images/shazam-error.png)
