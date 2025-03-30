@@ -395,7 +395,7 @@ async function init(){
         info(`Search completed with ${Mode.AUDFPRINT} mode, now analyzing results... Please wait and do not close the program`)
         await createAudfprintLogs(env)
     }
-    if(readdirSync(RESULTS_FOLDER).some(file => extname(file) === '.txt'))
+    if(existsSync(RESULTS_FOLDER) && readdirSync(RESULTS_FOLDER).some(file => extname(file) === '.txt'))
         info(`Execution complete! Check logs results in: ${RESULTS_FOLDER}`)
     else
         info('Execution complete! Unfortunately, no results were found')
