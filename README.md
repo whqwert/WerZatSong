@@ -29,7 +29,7 @@ To use WerZatSong effectively, you'll also need the following:
 - **Audiotag API key** → Required for Audiotag search mode (see *"How to Get an Audiotag API Key"* below)
 - **AcoustID API key** → Required for MusicBrainz/AcoustID search mode (see *"How to Get an AcoustID API Key"* below)
 - **Database for Audfprint** → Required for Audfprint search mode (see *"Download the Audfprint Database"* below)
-  - **Storage Alert** → The database is approximately **35GB**. If possible, use an **SSD** for faster performance over an **HDD**
+  - **Storage Alert** → The database is approximately **35GB**. If possible, place on an **SSD** for faster performance
 
 #### How to Get a Discord Webhook URL
 
