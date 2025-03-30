@@ -87,12 +87,18 @@ To use WerZatSong effectively, you'll also need the following:
     pip install shazamio
     ```
 
-    - **Note**: If you encounter an error during the installation of these dependencies (see screenshot below), it may be due to missing Rust dependencies. To resolve this:
-      - Install Rust from [their official website](https://www.rust-lang.org/tools/install)
-      - After installation, verify it works by running `rustc --version` in your terminal
-      - Once Rust is installed, retry the `pip install` commands above
-
-      ![Rust Error](images/rust-error.png)
+    - **Note**: If you encounter an error during the installation of these dependencies, it may be due to missing dependencies. Here are two common issues and their solutions:
+        - **Rust Error** (see screenshot below):
+            - Install Rust from [the official website](https://www.rust-lang.org/tools/install)
+            - After installation, verify it works by running `rustc --version` in your terminal
+            - Once Rust is installed, retry the `pip install` commands above
+            ![Rust Error](images/rust-error.png)
+        - **C++ Build Tools Error** (see screenshot below):
+            - Install Build Tools for Visual Studio 2017 or later from [the official website](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=16)
+            - During installation, select the *"Desktop development with C++ workload"* (also referred to as C++ tools)
+            - After installation, restart your machine
+            - Retry the `pip install` commands above
+            ![Shazam Error](images/shazam-error.png)
 
 Done! Now you're ready to set up WerZatSong.
 
