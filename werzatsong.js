@@ -2,7 +2,7 @@ const dotenv = require('dotenv')
 const { exec, spawn } = require('node:child_process')
 const { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, unlinkSync, writeFileSync } = require('node:fs')
 const { availableParallelism } = require('node:os')
-const { basename, join } = require('node:path')
+const { basename, extname, join } = require('node:path')
 const { promisify } = require('node:util')
 const { hideBin } = require('yargs/helpers')
 const yargs = require('yargs/yargs')
@@ -22,6 +22,7 @@ const AUDFPRINT_HIGHEST_SCORE = 2 // percentage
 const AUDFPRINT_EXTREME_HASHES = 70 // amount
 const MAX_FILES_PER_SEARCH = 30 // amount
 const MUSICBRAINZ_MIN_SCORE = 60 // percentage
+const PROGRAM_VERSION = 'v1.1'
 const RESULTS_FOLDER = join(consts.LOGS_FOLDER, generateUnique())
 const SHAZAM_SLEEP = 1.5 // seconds
 const WEBHOOK_SLEEP = 2 // seconds
@@ -36,7 +37,7 @@ const Mode = {
 const execPromise = promisify(exec)
 const { argv } = yargs(hideBin(process.argv))
 // Program version
-.version('v1.0.0')
+.version(PROGRAM_VERSION)
 // Search modes
 .option(Mode.AUDFPRINT, { type: 'boolean', description: 'Enable Audfprint-based matching' })
 .option(Mode.AUDIOTAG, { type: 'boolean', description: 'Enable search using the Audiotag API' })
@@ -52,28 +53,25 @@ const { argv } = yargs(hideBin(process.argv))
 .option('threads', { type: 'number', description: 'Set the number of threads to use for Audfprint processing' })
 
 function setupFolders(){
-    const foldersToCreate = [
-        consts.DATABASE_FOLDER,
-        consts.INPUT_FOLDER,
-        consts.LOGS_FOLDER,
-        consts.PRECOMPUTED_FOLDER,
-        consts.PROCESSED_FOLDER,
-        consts.TEMP_FOLDER
-    ]
-    for(const folder of foldersToCreate){
-        if(!existsSync(folder))
-            mkdirSync(folder)
-    }
     const foldersToClean = [
         consts.PRECOMPUTED_FOLDER,
         consts.PROCESSED_FOLDER,
         consts.TEMP_FOLDER
     ]
     for(const folder of foldersToClean){
-        if(existsSync(folder)){
+        if(existsSync(folder))
             rmSync(folder, { recursive: true })
+        mkdirSync(folder)
+    }
+    const foldersToCreate = [
+        ...foldersToClean,
+        consts.DATABASE_FOLDER,
+        consts.INPUT_FOLDER,
+        consts.LOGS_FOLDER
+    ]
+    for(const folder of foldersToCreate){
+        if(!existsSync(folder))
             mkdirSync(folder)
-        }
     }
 }
 
@@ -328,7 +326,7 @@ async function shazam(env, file){
 
 async function init(){
     let { duration, extension, folder, threads, trim } = argv
-    info('Welcome to WerZatSong! - Developed by Nel with contributions from Numerophobe, AzureBlast and Mystic65')
+    info(`Welcome to WerZatSong ${PROGRAM_VERSION}! - Developed by Nel with contributions from Numerophobe, AzureBlast and Mystic65`)
     setupFolders()
     const env = fetchEnvironment()
     const validatedWebhook = await validateWebhook(env.WEBHOOK_URL)
@@ -397,7 +395,10 @@ async function init(){
         info(`Search completed with ${Mode.AUDFPRINT} mode, now analyzing results... Please wait and do not close the program`)
         await createAudfprintLogs(env)
     }
-    info(`Execution complete! Check logs results in: ${RESULTS_FOLDER}`)
+    if(readdirSync(RESULTS_FOLDER).some(file => extname(file) === '.txt'))
+        info(`Execution complete! Check logs results in: ${RESULTS_FOLDER}`)
+    else
+        info('Execution complete! Unfortunately, no results were found')
 }
 
 init()

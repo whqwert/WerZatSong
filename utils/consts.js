@@ -23,7 +23,6 @@ const consts = {
     ENV_FILE: join(ROOT_PATH, '.env'),
     EXAMPLE_ENV_FILE: join(ROOT_PATH, '.env.example'),
     FILLER_FILE: join(ROOT_PATH, 'resources', 'filler.mp3'),
-    FPCALC_PROGRAM: join(ROOT_PATH, 'libs', 'fpcalc', 'fpcalc.exe'),
     FPCALC_SCRIPT: join(ROOT_PATH, 'scripts', 'fpcalc.js'),
     MUSICBRAINZ_SCRIPT: join(ROOT_PATH, 'scripts', 'musicbrainz.js'),
     PKLZS_FILE: join(ROOT_PATH, 'temp', '_pklzs.txt'),

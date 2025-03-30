@@ -15,20 +15,67 @@ Before you start, make sure these programs are installed on your computer:
 
 ### System Requirements
 
-- [**Node.js**](https://nodejs.org) (v20.0 or higher) → Check in your terminal with `node -v` and `npm -v`
-- [**Python**](https://www.python.org/downloads) (v3.13 or higher) → Check in your terminal with `python --version` and `pip --version`
-- [**FFmpeg**](https://www.ffmpeg.org/download.html) → Check in your terminal with `ffmpeg -version`
+- [**Node.js**](https://nodejs.org) (v20.0 or higher) → Add to PATH and check in your terminal with `node -v` and `npm -v`
+- [**Python**](https://www.python.org/downloads) (v3.13 or higher) → Add to PATH and check in your terminal with `python --version` and `pip --version`
+- [**FFmpeg**](https://www.gyan.dev/ffmpeg/builds) → Add to PATH and check in your terminal with `ffmpeg -version`
 
   ![Programs](images/programs.png)
 
-### Installation
+### Program Requirements
+
+To use WerZatSong effectively, you'll also need the following:
+
+- **Discord Webhook URL** → For receiving match notifications (see *"How to Get a Discord Webhook URL"* below)
+- **Audiotag API key** → Required for Audiotag search mode (see *"How to Get an Audiotag API Key"* below)
+- **AcoustID API key** → Required for MusicBrainz/AcoustID search mode (see *"How to Get an AcoustID API Key"* below)
+- **Database for Audfprint** → Required for Audfprint search mode (see *"Download the Audfprint Database"* below)
+  - **Storage Alert** → The database is approximately **35GB**. If possible, use an **SSD** for faster performance over an **HDD**
+
+#### How to Get a Discord Webhook URL
+
+1. Open Discord and create your own server (if you don't have one)
+2. In the **#general** text channel, click the gear icon (**Edit Channel**)
+3. Go to **Integrations** → **Webhooks**
+4. Click **Create Webhook**, then open it and select **Copy Webhook URL**
+5. Save it for now, you'll need it soon
+
+#### How to Get an Audiotag API Key
+
+1. Go to the [Audiotag](https://audiotag.info) website
+2. Create a new account or log in if you already have one
+3. Go to the [**User Section**](https://user.audiotag.info) and click the **API keys** tab
+4. Click **Create new API key** button, copy the key and save it for now
+
+#### How to Get an AcoustID API Key
+
+1. Go to the [AcoustID](https://acoustid.org) website
+2. Create a new account or log in if you already have one
+3. In [**My Applications**](https://acoustid.org/my-applications), click the **Register a new application** button
+4. Fill in the fields with basic info (it can be random) and click **Register**
+5. Copy the application's **API key** that appears and save it for now
+
+#### Download the Audfprint Database
+
+- Download the **database folders** that contain the **PKLZ files** from either [**Google Drive**](https://drive.google.com/drive/u/1/folders/1O6Xv3BhQhvNdqkZLcVvtmh9VD7HTV57f) or from this [**Alternative Link**](https://pastebin.com/ATyv1LFP)
+- The folders are organized by **genres** or **sources** (e.g., `"indie-rock"`, `"watzatsong"`)
+- As of **March 30, 2025**, ensure you've downloaded all **1,238** PKLZ files from these **6 folders**:
+
+    - `dark-experimental` → **103** files
+    - `indie-rock` → **86** files
+    - `lyon-funk` → **594** files
+    - `musify` → **65** files
+    - `random-variety` → **355** files
+    - `watzatsong` → **35** files
+
+### Program Installation
 
 1. **Download WerZatSong**:
    - Go to the repository, click **<> Code** → **Download ZIP**
    - Unzip the file to a folder of your choice
+   - Now you should see a folder called `WerZatSong-main`
 
 2. **Navigate to the folder**:
-   - Navigate to the unzipped folder location using the `cd` command:
+   - Navigate to the unzipped folder location using the `cd` command in your terminal:
 
      ```bash
      cd WerZatSong-main
@@ -45,39 +92,19 @@ Before you start, make sure these programs are installed on your computer:
     ```bash
     pip install -r requirements.txt
     pip install audioop-lts
+    pip install shazamio
     ```
+
+    - **Note**: If you encounter an error during the installation of these dependencies (see screenshot below), it may be due to missing Rust dependencies. To resolve this:
+      - Install Rust from [their official website](https://www.rust-lang.org/tools/install)
+      - After installation, verify it works by running `rustc --version` in your terminal
+      - Once Rust is installed, retry the `pip install` commands above
+
+      ![Rust Error](images/rust-error.png)
 
 Done! Now you're ready to set up WerZatSong.
 
 ## Initial Setup
-
-To make WerZatSong work, you'll need three things:
-- **Discord Webhook URL** (to get match notifications)
-- **Audiotag API key** (required to use Audiotag search mode)
-- **AcoustID API key** (required to use MusicBrainz/AcoustID search mode)
-
-### How to Get a Discord Webhook URL
-
-1. Open Discord and create your own server (if you don't have one)
-2. In the **#general** text channel, click the gear icon (**Edit Channel**)
-3. Go to **Integrations** → **Webhooks**
-4. Click **Create Webhook**, then open it and select **Copy Webhook URL**
-5. Save it for now, you'll need it soon
-
-### How to Get an Audiotag API Key
-
-1. Go to the [Audiotag](https://audiotag.info) website
-2. Create a new account or log in if you already have one
-3. Go to the [**User Section**](https://user.audiotag.info) and click the **API keys** tab
-4. Click **Create new API key** button, copy the key and save it for now
-
-### How to Get an AcoustID API Key
-
-1. Go to the [AcoustID](https://acoustid.org) website
-2. Create a new account or log in if you already have one
-3. In [**My Applications**](https://acoustid.org/my-applications), click the **Register a new application** button
-4. Fill in the fields with basic info (it can be random) and click **Register**
-5. Copy the application's **API key** that appears and save it for now
 
 ### Set Up WerZatSong for the First Time
 
@@ -93,6 +120,12 @@ On the **first run**, this will:
 - Exit automatically with an error message after setup is complete
 
   ![Setup](images/setup.png)
+
+### Set Up the Audfprint Database
+
+After the first run, place the downloaded folders containing the PKLZ files inside the generated `database` folder. This step is required if you plan to use the Audfprint search mode:
+
+  ![Setup](images/database.png)
 
 ## How To Use WerZatSong
 
@@ -125,31 +158,17 @@ On the **first run**, this will:
 ## Search Modes Explained
 
 ### 1. Audfprint
-- Finds matches by comparing your MP3 files to a local database of fingerprints (PKLZ files)
-- Basic usage example:
 
-    ```bash
-    node werzatsong.js --audfprint
-    ```
+Finds matches by comparing your MP3 files to a local database of fingerprints (PKLZ files):
 
-#### Set Up the Audfprint Database
-
-- Download the **database folders** that contain the **PKLZ files** from the [**Google Drive Repository**](https://drive.google.com/drive/u/1/folders/1O6Xv3BhQhvNdqkZLcVvtmh9VD7HTV57f)
-- Place the downloaded folders inside the `database` folder (created automatically after setup)
-- The folders are organized by **genres** or **sources** (e.g., `"indie-rock"`, `"watzatsong"`)
-- Once finished, your `database` folder should look like this:
-
-  ![Database Folder](images/database.png)
+```bash
+node werzatsong.js --audfprint
+```
 
 #### Additional Audfprint Options
 
 - **`--folder <subfolder>`** → Selects a specific subfolder inside the `database` folder. This is useful if you want to search only fingerprints within a certain genre or source instead of processing all fingerprints from all folders at once, which takes longer (e.g., `--folder "indie-rock"`)
 - **`--threads <number>`** → Sets the number of processing threads (e.g., `--threads 4`) [**max**: 16] [**default**: max threads available in your machine]
-- Usage example with some options:
-
-    ```bash
-    node werzatsong.js --audfprint --folder "lyon-funk" --trim 60 --threads 4
-    ```
 
 ### 2. Audiotag
 
@@ -197,8 +216,7 @@ node werzatsong.js --shazam
 
 ## Where To Find Results
 
-- Results logs are stored in the **`logs`** folder after the execution finishes
-- Each time a possible match is found a message will be sent to your **Discord Webhook**
+Results logs are stored in the **`logs`** folder after the execution finishes. The `.txt` files may contain false positives. Results are listed from top to bottom, with the most likely matches at the top and the least likely at the bottom. The most reliable results (least likely to be false positives) are those sent to your **Discord Webhook**
 
 ## Development Credits
 

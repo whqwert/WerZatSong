@@ -29,7 +29,8 @@ async function extendFile(file, offset){
 
 async function calculateFingerprint(file, offset){
     const filePath = await extendFile(file, offset)
-    const { stdout } = await execPromise(`${consts.FPCALC_PROGRAM} -length ${MUSICBRAINZ_LIMIT} -json "${filePath}"`)
+    const fpcalc = process.env.FPCALC_COMMAND === 'fpcalc.exe' ? join(__dirname, '..', 'libs', 'fpcalc', process.env.FPCALC_COMMAND) : process.env.FPCALC_COMMAND
+    const { stdout } = await execPromise(`${fpcalc} -length ${MUSICBRAINZ_LIMIT} -json "${filePath}"`)
     const { fingerprint } = JSON.parse(stdout.trim())
     unlinkSync(filePath)
     return fingerprint
