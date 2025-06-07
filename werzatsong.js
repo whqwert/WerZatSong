@@ -99,13 +99,16 @@ function parseModes(){
 
 function loadSamples(modes){
     const audioFiles = readdirSync(consts.INPUT_FOLDER).filter(filename => filename.endsWith('.mp3'))
-    const precomputedFiles = readdirSync(consts.INPUT_FOLDER).filter(filename => filename.endsWith('.afpt'))
-    if(modes.some(mode => mode !== Mode.AUDFPRINT) && audioFiles.length === 0)
-        exit(`You need at least one MP3 file in the "input" folder if you included mode: ${Mode.AUDIOTAG}, ${Mode.MUSICBRAINZ} or ${Mode.SHAZAM}`)
-    if(audioFiles.length > MAX_FILES_PER_SEARCH)
-        exit(`Too many MP3 files! Limit per each search is ${MAX_FILES_PER_SEARCH} files, but found ${audioFiles.length} files (MP3)`)
+    const precomputedFiles = readdirSync(consts.INPUT_FOLDER).filter(filename => filename.endsWith('.afpt') || filename.endsWith('.afpk'))
+    if(modes.some(mode => mode !== Mode.AUDFPRINT)) {
+        if (audioFiles.length === 0) {
+            exit(`You need at least one MP3 file in the "input" folder if you included mode: ${Mode.AUDIOTAG}, ${Mode.MUSICBRAINZ} or ${Mode.SHAZAM}`)
+        } else if (audioFiles.length > MAX_FILES_PER_SEARCH) {
+            exit(`Too many MP3 files! Limit per each search is ${MAX_FILES_PER_SEARCH} files, but found ${audioFiles.length} files (MP3)`)
+        }
+    }
     if(modes.includes(Mode.AUDFPRINT) && audioFiles.length === 0 && precomputedFiles.length === 0)
-        exit(`In ${Mode.AUDFPRINT} mode, add at least one MP3 or AFPT file to "input" folder`)
+        exit(`In ${Mode.AUDFPRINT} mode, add at least one MP3, AFPT, or AFPK file to "input" folder`)
     const mp3Basenames = audioFiles.map(file => trimExtension(file))
     const afptBasenames = precomputedFiles.map(file => trimExtension(file))
     const collisions = mp3Basenames.filter(base => afptBasenames.includes(base))
@@ -113,9 +116,6 @@ function loadSamples(modes){
         const collisionFiles = collisions.map(base => `- ${base}.mp3 / ${base}.afpt\n`).join('')
         exit(`Duplicated filename collisions detected in "input" folder:\n${collisionFiles}`)
     }
-    const totalFiles = audioFiles.length + precomputedFiles.length
-    if(modes.includes(Mode.AUDFPRINT) && totalFiles > MAX_FILES_PER_SEARCH)
-        exit(`Too many files! Limit per each ${Mode.AUDFPRINT} search is ${MAX_FILES_PER_SEARCH} files, but found ${totalFiles} files (MP3 + AFPT)`)
     return { audioFiles, precomputedFiles }
 }
 
