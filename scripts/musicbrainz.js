@@ -10,25 +10,9 @@ const { trimExtension } = require('../utils/helpers')
 
 dotenv.config()
 
-const BLACKLISTED_RESULTS_REGEX = /^94765\d{3}$/
 const INTERVAL_DELAY = 600 // milliseconds
 
 const { argv } = yargs(hideBin(process.argv))
-
-async function isBlacklisted(trackId){
-    try {
-        const { body } = await request(`${consts.ACOUSTID_TRACK_ENDPOINT}/${trackId}`)
-        const html = await body.text()
-        const matches = [...html.matchAll(/<a\shref="\/fingerprint\/\d+">(\d+)<\/a>/g)]
-        if(matches.length > 1)
-            return false
-        const fingerprintId = matches[0][1]
-        return BLACKLISTED_RESULTS_REGEX.test(fingerprintId)
-    }
-    catch {
-        return false
-    }
-}
 
 async function searchAcoustID(acoustKey, duration, fingerprint){
     const response = { error: false, results: null }
@@ -47,10 +31,7 @@ async function searchAcoustID(acoustKey, duration, fingerprint){
             }
         }
         if(json.status === 'ok' && json.results?.length > 0){
-            response.results = await Promise.all(json.results.map(async result => {
-                return { result, blacklisted: await isBlacklisted(result.id) }
-            }))
-            response.results = response.results.filter(({ blacklisted }) => !blacklisted).map(({ result }) => result)
+            response.results = json.results;
         }
         return response
     }
